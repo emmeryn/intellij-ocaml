@@ -78,7 +78,7 @@ public class OCamlRunConfigurationForm implements OCamlRunConfigurationParams {
                 return file.isDirectory() || OCamlFileUtil.isImplementationFile(file);
             }
         };
-        mlFileChooserDescriptor.setRoot(myProject.getBaseDir());
+        mlFileChooserDescriptor.setRoots(myProject.getBaseDir());
         
         final ComponentWithBrowseButton.BrowseFolderActionListener<JTextField> listener =
             new ComponentWithBrowseButton.BrowseFolderActionListener<JTextField>("Select OCaml Application Main File",
@@ -146,7 +146,7 @@ public class OCamlRunConfigurationForm implements OCamlRunConfigurationParams {
         });
 
         final FileChooserDescriptor workingDirChooserDescriptor = new FileChooserDescriptor(false, true, false, false, false, false);
-        workingDirChooserDescriptor.setRoot(myProject.getBaseDir());
+        workingDirChooserDescriptor.setRoots(myProject.getBaseDir());
         myWorkingDirectoryEditor.addBrowseFolderListener("Select Working Directory", "", myProject, workingDirChooserDescriptor);
     }
 
