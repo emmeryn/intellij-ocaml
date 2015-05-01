@@ -20,6 +20,7 @@ package manuylov.maxim.ocaml.run;
 
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.module.Module;
+import com.intellij.openapi.module.ModuleType;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.projectRoots.ProjectJdkTable;
 import com.intellij.openapi.projectRoots.Sdk;
@@ -111,7 +112,7 @@ public class OCamlRunConfigurationForm implements OCamlRunConfigurationParams {
             }
             else {
               final Module module = (Module)value;
-              setIcon(module.getModuleType().getNodeIcon(false));
+              setIcon(ModuleType.get(module).getNodeIcon(false));
               append(module.getName(), SimpleTextAttributes.REGULAR_ATTRIBUTES);
             }
           }
