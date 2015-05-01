@@ -1,5 +1,3 @@
 <component name="CopyrightManager">
-  <settings default="myProfile">
-    <module2copyright />
-  </settings>
+  <settings default="myProfile" />
 </component>
