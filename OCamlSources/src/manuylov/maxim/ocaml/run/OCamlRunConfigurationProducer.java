@@ -20,11 +20,14 @@ package manuylov.maxim.ocaml.run;
 
 import com.intellij.execution.Location;
 import com.intellij.execution.actions.ConfigurationContext;
+import com.intellij.execution.actions.RunConfigurationProducer;
+import com.intellij.execution.configurations.RunConfiguration;
 import com.intellij.execution.impl.RunnerAndConfigurationSettingsImpl;
 import com.intellij.execution.junit.RuntimeConfigurationProducer;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.util.Ref;
 import com.intellij.openapi.util.io.FileUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
@@ -38,7 +41,7 @@ import org.jetbrains.annotations.Nullable;
  * @author Maxim.Manuylov
  *         Date: 07.04.2010
  */
-public class OCamlRunConfigurationProducer extends RuntimeConfigurationProducer implements Cloneable {
+public class OCamlRunConfigurationProducer extends RunConfigurationProducer<OCamlRunConfiguration> implements Cloneable {
     @Nullable private PsiFile mySourceFile = null;
 
     public OCamlRunConfigurationProducer() {
@@ -50,37 +53,72 @@ public class OCamlRunConfigurationProducer extends RuntimeConfigurationProducer 
         return mySourceFile;
     }
 
-    @Nullable
-    protected RunnerAndConfigurationSettingsImpl createConfigurationByElement(@NotNull final Location location,
-                                                                              @NotNull final ConfigurationContext context) {
-        final PsiFile psiFile = location.getPsiElement().getContainingFile();
+//    @Nullable
+//    protected RunnerAndConfigurationSettingsImpl createConfigurationByElement(@NotNull final Location location,
+//                                                                              @NotNull final ConfigurationContext context) {
+//        final PsiFile psiFile = location.getPsiElement().getContainingFile();
+//        if (psiFile == null || !OCamlFileUtil.isImplementationFile(psiFile)) {
+//            return null;
+//        }
+//        final Project project = psiFile.getProject();
+//        final VirtualFile virtualFile = psiFile.getVirtualFile();
+//        if (virtualFile == null) {
+//            return null;
+//        }
+//        final OCamlModule ocamlModule = OCamlModule.getBySourceFile(virtualFile, project);
+//        if (ocamlModule == null) {
+//            return null;
+//        }
+//        mySourceFile = psiFile;
+//
+//        final RunnerAndConfigurationSettingsImpl settings = cloneTemplateConfiguration(project, context);
+//        final OCamlRunConfiguration configuration = (OCamlRunConfiguration) settings.getConfiguration();
+//        configuration.setMainOCamlModule(ocamlModule);
+//        configuration.setWorkingDirectory(FileUtil.toSystemDependentName(ocamlModule.getSourcesDir().getPath()));
+//        configuration.setName(configuration.suggestedName());
+//        final Module module = ModuleUtil.findModuleForPsiElement(psiFile);
+//        configuration.setUsedModuleSdk(module != null);
+//        configuration.setModule(module);
+//        copyStepsBeforeRun(project, configuration);
+//        return settings;
+//    }
+
+    public int compareTo(@Nullable final Object obj) {
+        return 0;
+    }
+
+    protected boolean setupConfigurationFromContext(OCamlRunConfiguration configuration, ConfigurationContext configurationContext, Ref<PsiElement> ref) {
+        PsiElement psiElement = ref.get();
+        PsiFile psiFile = psiElement.getContainingFile();
         if (psiFile == null || !OCamlFileUtil.isImplementationFile(psiFile)) {
-            return null;
+            return false;
         }
         final Project project = psiFile.getProject();
         final VirtualFile virtualFile = psiFile.getVirtualFile();
         if (virtualFile == null) {
-            return null;
+            return false;
         }
         final OCamlModule ocamlModule = OCamlModule.getBySourceFile(virtualFile, project);
         if (ocamlModule == null) {
-            return null;
+            return false;
         }
         mySourceFile = psiFile;
 
-        final RunnerAndConfigurationSettingsImpl settings = cloneTemplateConfiguration(project, context);
-        final OCamlRunConfiguration configuration = (OCamlRunConfiguration) settings.getConfiguration();
+//        final RunnerAndConfigurationSettingsImpl settings = cloneTemplateConfiguration(project, context);
+//        final OCamlRunConfiguration configuration = (OCamlRunConfiguration) settings.getConfiguration();
         configuration.setMainOCamlModule(ocamlModule);
         configuration.setWorkingDirectory(FileUtil.toSystemDependentName(ocamlModule.getSourcesDir().getPath()));
         configuration.setName(configuration.suggestedName());
+
         final Module module = ModuleUtil.findModuleForPsiElement(psiFile);
         configuration.setUsedModuleSdk(module != null);
         configuration.setModule(module);
-        copyStepsBeforeRun(project, configuration);
-        return settings;
+//        copyStepsBeforeRun(project, configuration);
+        return true;
     }
 
-    public int compareTo(@Nullable final Object obj) {
-        return 0;
+    @Override
+    public boolean isConfigurationFromContext(OCamlRunConfiguration oCamlRunConfiguration, ConfigurationContext configurationContext) {
+        return false;
     }
 }
