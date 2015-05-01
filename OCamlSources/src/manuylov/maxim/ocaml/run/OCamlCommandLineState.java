@@ -106,7 +106,7 @@ public class OCamlCommandLineState extends CommandLineState {
         else {
             sdk = myConfig.getSpecifiedSdk();
             if (sdk == null) {
-                sdk = ProjectRootManager.getInstance(myProject).getProjectJdk();
+                sdk = ProjectRootManager.getInstance(myProject).getProjectSdk();
             }
         }
         assert OCamlModuleUtil.isOCamlSdk(sdk);
