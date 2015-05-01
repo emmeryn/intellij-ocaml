@@ -29,4 +29,8 @@ public class OCamlPatternSurroundDescriptor extends BaseOCamlSurroundDescriptor 
     public OCamlPatternSurroundDescriptor() {
         super(OCamlPattern.class, new OCamlWithParenthesesExpressionSurrounder());
     }
+
+    public boolean isExclusive() {
+        return false;
+    }
 }

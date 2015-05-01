@@ -29,4 +29,8 @@ public class OCamlModuleTypeSurroundDescriptor extends BaseOCamlSurroundDescript
     public OCamlModuleTypeSurroundDescriptor() {
         super(OCamlModuleType.class, new OCamlWithParenthesesExpressionSurrounder());
     }
+
+    public boolean isExclusive() {
+        return false;
+    }
 }

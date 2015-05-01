@@ -41,4 +41,8 @@ public class OCamlExpressionSurroundDescriptor extends BaseOCamlSurroundDescript
             new OCamlWithWhileExpressionSurrounder()
         );
     }
+
+    public boolean isExclusive() {
+        return false;
+    }
 }
