@@ -166,7 +166,7 @@ public class OCamlRunConfiguration extends ModuleBasedConfiguration<RunConfigura
         }
         else {
             if (mySpecifiedSdk == null) {
-                final Sdk projectSdk = ProjectRootManager.getInstance(getProject()).getProjectJdk();
+                final Sdk projectSdk = ProjectRootManager.getInstance(getProject()).getProjectSdk();
                 if (!OCamlModuleUtil.isOCamlSdk(projectSdk)) {
                     throw new RuntimeConfigurationException("Project default SDK is not a valid OCaml SDK.");
                 }
